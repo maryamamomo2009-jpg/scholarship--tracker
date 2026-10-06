@@ -1,0 +1,1270 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Scholarship Tracker</title>
+
+<style>
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+}
+
+body {
+    background:
+        radial-gradient(circle at top left, #e9ddff 0, transparent 35%),
+        radial-gradient(circle at bottom right, #dff4ff 0, transparent 35%),
+        #f7f8fc;
+    color: #202033;
+    min-height: 100vh;
+}
+
+.container {
+    width: 92%;
+    max-width: 1250px;
+    margin: auto;
+    padding: 35px 0;
+}
+
+/* HEADER */
+
+header {
+    position: relative;
+    overflow: hidden;
+    background: linear-gradient(135deg, #5b3fd1, #8b5cf6, #a855f7);
+    color: white;
+    padding: 40px;
+    border-radius: 28px;
+    margin-bottom: 25px;
+    box-shadow: 0 15px 40px rgba(91, 63, 209, 0.25);
+}
+
+header::after {
+    content: "🎓";
+    position: absolute;
+    right: 45px;
+    top: 20px;
+    font-size: 80px;
+    opacity: 0.18;
+}
+
+header h1 {
+    font-size: 36px;
+    margin-bottom: 10px;
+    position: relative;
+    z-index: 1;
+}
+
+header p {
+    opacity: 0.92;
+    font-size: 16px;
+    position: relative;
+    z-index: 1;
+}
+
+/* STATS */
+
+.stats {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 18px;
+    margin-bottom: 25px;
+}
+
+.stat {
+    background: rgba(255,255,255,0.95);
+    padding: 24px;
+    border-radius: 22px;
+    box-shadow: 0 8px 30px rgba(35, 25, 70, 0.08);
+    border: 1px solid rgba(255,255,255,0.8);
+    transition: 0.2s;
+}
+
+.stat:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 14px 35px rgba(35, 25, 70, 0.12);
+}
+
+.stat h3 {
+    color: #77758a;
+    font-size: 13px;
+    margin-bottom: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.stat p {
+    font-size: 32px;
+    font-weight: bold;
+    color: #6746df;
+}
+
+/* CARDS */
+
+.card {
+    background: rgba(255,255,255,0.96);
+    padding: 28px;
+    border-radius: 24px;
+    box-shadow: 0 8px 30px rgba(35, 25, 70, 0.08);
+    margin-bottom: 25px;
+    border: 1px solid #eeeafa;
+}
+
+.card h2 {
+    margin-bottom: 20px;
+    color: #29263d;
+    font-size: 21px;
+}
+
+/* FORM */
+
+.form {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1fr auto;
+    gap: 12px;
+}
+
+input,
+select {
+    width: 100%;
+    padding: 14px;
+    border: 1px solid #e1dfea;
+    background: #faf9fd;
+    border-radius: 13px;
+    outline: none;
+    font-size: 14px;
+    color: #333;
+    transition: 0.2s;
+}
+
+input:focus,
+select:focus {
+    border-color: #7654e8;
+    background: white;
+    box-shadow: 0 0 0 4px rgba(118,84,232,0.10);
+}
+
+button {
+    border: none;
+    cursor: pointer;
+    border-radius: 13px;
+    padding: 13px 18px;
+    font-weight: bold;
+    transition: 0.2s;
+}
+
+button:hover {
+    transform: translateY(-2px);
+    opacity: 0.92;
+}
+
+.add-btn {
+    background: linear-gradient(135deg, #6041d8, #8b5cf6);
+    color: white;
+    box-shadow: 0 7px 18px rgba(96,65,216,0.25);
+}
+
+/* TOOLS */
+
+.tools {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin-bottom: 20px;
+}
+
+.tools input {
+    flex: 1;
+    min-width: 220px;
+}
+
+.secondary {
+    background: #eeeaff;
+    color: #5c42c7;
+}
+
+.danger {
+    background: #ffe8e8;
+    color: #d33;
+}
+
+/* TABLE */
+
+.table-wrapper {
+    overflow-x: auto;
+    border-radius: 15px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 750px;
+}
+
+th {
+    background: #f5f2ff;
+    color: #625d75;
+    text-align: left;
+    padding: 16px;
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 0.4px;
+}
+
+td {
+    padding: 16px;
+    border-bottom: 1px solid #eeeef4;
+    color: #555264;
+}
+
+td strong {
+    color: #29263d;
+}
+
+tr {
+    transition: 0.15s;
+}
+
+tr:hover {
+    background: #faf9ff;
+}
+
+/* STATUS */
+
+.status {
+    padding: 7px 12px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: bold;
+    display: inline-block;
+}
+
+.not-started {
+    background: #eeeeF3;
+    color: #666;
+}
+
+.in-progress {
+    background: #fff1c9;
+    color: #986800;
+}
+
+.submitted {
+    background: #dcf7e8;
+    color: #137842;
+}
+
+/* ACTION BUTTONS */
+
+.action-btn {
+    padding: 8px 11px;
+    margin-right: 5px;
+    font-size: 12px;
+}
+
+.edit {
+    background: #eeeaff;
+    color: #5c42c7;
+}
+
+.delete {
+    background: #ffe5e5;
+    color: #c33;
+}
+
+/* EMPTY */
+
+.empty {
+    text-align: center;
+    padding: 45px;
+    color: #999;
+}
+
+/* FOOTER */
+
+footer {
+    text-align: center;
+    color: #999;
+    padding: 20px;
+    font-size: 13px;
+}
+
+/* RESPONSIVE */
+
+@media (max-width: 1000px) {
+
+    .stats {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .form {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .add-btn {
+        width: 100%;
+    }
+}
+
+@media (max-width: 600px) {
+
+    .container {
+        width: 94%;
+        padding: 20px 0;
+    }
+
+    header {
+        padding: 28px;
+    }
+
+    header h1 {
+        font-size: 27px;
+    }
+
+    header::after {
+        right: 15px;
+        font-size: 55px;
+    }
+
+    .stats {
+        grid-template-columns: 1fr 1fr;
+        gap: 12px;
+    }
+
+    .stat {
+        padding: 18px;
+    }
+
+    .stat p {
+        font-size: 26px;
+    }
+
+    .form {
+        grid-template-columns: 1fr;
+    }
+
+    .card {
+        padding: 20px;
+    }
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<header>
+    <h1>🎓 Scholarship Tracker</h1>
+    <p>Organize, manage and track your university applications</p>
+</header>
+
+<!-- STATISTICS -->
+
+<div class="stats">
+
+    <div class="stat">
+        <h3>Total Applications</h3>
+        <p id="total">0</p>
+    </div>
+
+    <div class="stat">
+        <h3>Not Started</h3>
+        <p id="notStarted">0</p>
+    </div>
+
+    <div class="stat">
+        <h3>In Progress</h3>
+        <p id="inProgress">0</p>
+    </div>
+
+    <div class="stat">
+        <h3>Submitted</h3>
+        <p id="submitted">0</p>
+    </div>
+
+</div>
+
+
+<!-- ADD APPLICATION -->
+
+<div class="card">
+
+    <h2>➕ Add Application</h2>
+
+    <div class="form">
+
+        <input
+            type="text"
+            id="university"
+            placeholder="University name"
+        >
+
+        <input
+            type="text"
+            id="country"
+            placeholder="Country"
+        >
+
+        <input
+            type="date"
+            id="deadline"
+        >
+
+        <select id="status">
+
+            <option value="Not Started">
+                Not Started
+            </option>
+
+            <option value="In Progress">
+                In Progress
+            </option>
+
+            <option value="Submitted">
+                Submitted
+            </option>
+
+        </select>
+
+        <button
+            class="add-btn"
+            onclick="addApplication()"
+        >
+            Add
+        </button>
+
+    </div>
+
+</div>
+
+
+<!-- APPLICATIONS -->
+
+<div class="card">
+
+    <h2>📚 My Applications</h2>
+
+    <div class="tools">
+
+        <input
+            type="text"
+            id="search"
+            placeholder="🔍 Search university or country..."
+            oninput="render()"
+        >
+
+        <select
+            id="filter"
+            onchange="render()"
+        >
+
+            <option value="All">
+                All Statuses
+            </option>
+
+            <option value="Not Started">
+                Not Started
+            </option>
+
+            <option value="In Progress">
+                In Progress
+            </option>
+
+            <option value="Submitted">
+                Submitted
+            </option>
+
+        </select>
+
+
+        <select
+            id="sort"
+            onchange="render()"
+        >
+
+            <option value="deadline">
+                Sort by Deadline
+            </option>
+
+            <option value="university">
+                Sort by University
+            </option>
+
+            <option value="country">
+                Sort by Country
+            </option>
+
+        </select>
+
+
+        <button
+            class="secondary"
+            onclick="exportData()"
+        >
+            📥 Export
+        </button>
+
+
+        <button
+            class="danger"
+            onclick="resetData()"
+        >
+            🔄 Reset Demo
+        </button>
+
+    </div>
+
+
+    <div class="table-wrapper">
+
+        <table>
+
+            <thead>
+
+                <tr>
+
+                    <th>
+                        University
+                    </th>
+
+                    <th>
+                        Country
+                    </th>
+
+                    <th>
+                        Deadline
+                    </th>
+
+                    <th>
+                        Status
+                    </th>
+
+                    <th>
+                        Actions
+                    </th>
+
+                </tr>
+
+            </thead>
+
+            <tbody id="applicationList"></tbody>
+
+        </table>
+
+    </div>
+
+</div>
+
+
+<footer>
+    Scholarship Tracker • Personal University Application Manager
+</footer>
+
+</div>
+
+
+<script>
+
+/* =========================
+   DATA
+========================= */
+
+const demoApplications = [
+
+    {
+        id: 1,
+        university: "University of Bologna",
+        country: "🇮🇹 Italy",
+        deadline: "2027-01-15",
+        status: "Not Started"
+    },
+
+    {
+        id: 2,
+        university: "Wuhan University",
+        country: "🇨🇳 China",
+        deadline: "2027-03-15",
+        status: "Not Started"
+    },
+
+    {
+        id: 3,
+        university: "University of Debrecen",
+        country: "🇭🇺 Hungary",
+        deadline: "2027-02-15",
+        status: "Not Started"
+    },
+
+    {
+        id: 4,
+        university: "Middle East Technical University",
+        country: "🇹🇷 Turkey",
+        deadline: "2027-02-28",
+        status: "Not Started"
+    }
+
+];
+
+
+let applications =
+    JSON.parse(
+        localStorage.getItem(
+            "scholarshipApplications"
+        )
+    )
+    || demoApplications;
+
+
+/* =========================
+   SAVE DATA
+========================= */
+
+function saveData() {
+
+    localStorage.setItem(
+        "scholarshipApplications",
+        JSON.stringify(applications)
+    );
+
+}
+
+
+/* =========================
+   ADD APPLICATION
+========================= */
+
+function addApplication() {
+
+    const university =
+        document
+        .getElementById("university")
+        .value
+        .trim();
+
+
+    const country =
+        document
+        .getElementById("country")
+        .value
+        .trim();
+
+
+    const deadline =
+        document
+        .getElementById("deadline")
+        .value;
+
+
+    const status =
+        document
+        .getElementById("status")
+        .value;
+
+
+    if (
+        !university ||
+        !country ||
+        !deadline
+    ) {
+
+        alert(
+            "Please fill in University, Country and Deadline."
+        );
+
+        return;
+    }
+
+
+    const newApplication = {
+
+        id: Date.now(),
+
+        university: university,
+
+        country: country,
+
+        deadline: deadline,
+
+        status: status
+
+    };
+
+
+    applications.push(
+        newApplication
+    );
+
+
+    saveData();
+
+
+    document
+        .getElementById("university")
+        .value = "";
+
+
+    document
+        .getElementById("country")
+        .value = "";
+
+
+    document
+        .getElementById("deadline")
+        .value = "";
+
+
+    document
+        .getElementById("status")
+        .value = "Not Started";
+
+
+    render();
+
+}
+
+
+/* =========================
+   DELETE
+========================= */
+
+function deleteApplication(id) {
+
+    const confirmed =
+        confirm(
+            "Delete this application?"
+        );
+
+
+    if (!confirmed) return;
+
+
+    applications =
+        applications.filter(
+            app => app.id !== id
+        );
+
+
+    saveData();
+
+    render();
+
+}
+
+
+/* =========================
+   EDIT
+========================= */
+
+function editApplication(id) {
+
+    const app =
+        applications.find(
+            app => app.id === id
+        );
+
+
+    if (!app) return;
+
+
+    const university =
+        prompt(
+            "University name:",
+            app.university
+        );
+
+
+    if (university === null) return;
+
+
+    const country =
+        prompt(
+            "Country:",
+            app.country
+        );
+
+
+    if (country === null) return;
+
+
+    const deadline =
+        prompt(
+            "Deadline (YYYY-MM-DD):",
+            app.deadline
+        );
+
+
+    if (deadline === null) return;
+
+
+    const status =
+        prompt(
+            "Status: Not Started / In Progress / Submitted",
+            app.status
+        );
+
+
+    if (status === null) return;
+
+
+    app.university =
+        university.trim();
+
+
+    app.country =
+        country.trim();
+
+
+    app.deadline =
+        deadline.trim();
+
+
+    app.status =
+        status.trim();
+
+
+    saveData();
+
+    render();
+
+}
+
+
+/* =========================
+   FORMAT DATE
+========================= */
+
+function formatDate(date) {
+
+    if (!date) return "";
+
+
+    const parts =
+        date.split("-");
+
+
+    if (parts.length !== 3) {
+        return date;
+    }
+
+
+    return (
+        parts[2]
+        + "/"
+        + parts[1]
+        + "/"
+        + parts[0]
+    );
+
+}
+
+
+/* =========================
+   STATUS CLASS
+========================= */
+
+function getStatusClass(status) {
+
+    if (status === "Submitted") {
+        return "submitted";
+    }
+
+
+    if (status === "In Progress") {
+        return "in-progress";
+    }
+
+
+    return "not-started";
+
+}
+
+
+/* =========================
+   RENDER
+========================= */
+
+function render() {
+
+    const list =
+        document.getElementById(
+            "applicationList"
+        );
+
+
+    const search =
+        document
+        .getElementById("search")
+        .value
+        .toLowerCase();
+
+
+    const filter =
+        document
+        .getElementById("filter")
+        .value;
+
+
+    const sort =
+        document
+        .getElementById("sort")
+        .value;
+
+
+    let filtered =
+        applications.filter(
+            app => {
+
+                const matchesSearch =
+
+                    app.university
+                        .toLowerCase()
+                        .includes(search)
+
+                    ||
+
+                    app.country
+                        .toLowerCase()
+                        .includes(search);
+
+
+                const matchesFilter =
+
+                    filter === "All"
+
+                    ||
+
+                    app.status === filter;
+
+
+                return (
+                    matchesSearch
+                    &&
+                    matchesFilter
+                );
+
+            }
+        );
+
+
+    /* SORT */
+
+    filtered.sort(
+        (a, b) => {
+
+            if (
+                sort === "university"
+            ) {
+
+                return a.university
+                    .localeCompare(
+                        b.university
+                    );
+
+            }
+
+
+            if (
+                sort === "country"
+            ) {
+
+                return a.country
+                    .localeCompare(
+                        b.country
+                    );
+
+            }
+
+
+            return a.deadline
+                .localeCompare(
+                    b.deadline
+                );
+
+        }
+    );
+
+
+    list.innerHTML = "";
+
+
+    if (filtered.length === 0) {
+
+        list.innerHTML = `
+
+            <tr>
+
+                <td
+                    colspan="5"
+                    class="empty"
+                >
+
+                    No applications found.
+
+                </td>
+
+            </tr>
+
+        `;
+
+    }
+
+    else {
+
+        filtered.forEach(
+            app => {
+
+                const row =
+                    document.createElement(
+                        "tr"
+                    );
+
+
+                row.innerHTML = `
+
+                    <td>
+
+                        <strong>
+                            ${escapeHTML(
+                                app.university
+                            )}
+                        </strong>
+
+                    </td>
+
+
+                    <td>
+
+                        ${escapeHTML(
+                            app.country
+                        )}
+
+                    </td>
+
+
+                    <td>
+
+                        ${formatDate(
+                            app.deadline
+                        )}
+
+                    </td>
+
+
+                    <td>
+
+                        <span
+                            class="status ${getStatusClass(
+                                app.status
+                            )}"
+                        >
+
+                            ${escapeHTML(
+                                app.status
+                            )}
+
+                        </span>
+
+                    </td>
+
+
+                    <td>
+
+                        <button
+                            class="action-btn edit"
+                            onclick="editApplication(${app.id})"
+                        >
+                            ✏️ Edit
+                        </button>
+
+
+                        <button
+                            class="action-btn delete"
+                            onclick="deleteApplication(${app.id})"
+                        >
+                            🗑️ Delete
+                        </button>
+
+                    </td>
+
+                `;
+
+
+                list.appendChild(row);
+
+            }
+        );
+
+    }
+
+
+    updateStats();
+
+}
+
+
+/* =========================
+   STATISTICS
+========================= */
+
+function updateStats() {
+
+    document
+        .getElementById("total")
+        .textContent =
+        applications.length;
+
+
+    document
+        .getElementById("notStarted")
+        .textContent =
+
+        applications.filter(
+            app =>
+                app.status ===
+                "Not Started"
+        ).length;
+
+
+    document
+        .getElementById("inProgress")
+        .textContent =
+
+        applications.filter(
+            app =>
+                app.status ===
+                "In Progress"
+        ).length;
+
+
+    document
+        .getElementById("submitted")
+        .textContent =
+
+        applications.filter(
+            app =>
+                app.status ===
+                "Submitted"
+        ).length;
+
+}
+
+
+/* =========================
+   EXPORT
+========================= */
+
+function exportData() {
+
+    const data =
+        JSON.stringify(
+            applications,
+            null,
+            2
+        );
+
+
+    const blob =
+        new Blob(
+            [data],
+            {
+                type:
+                    "application/json"
+            }
+        );
+
+
+    const url =
+        URL.createObjectURL(
+            blob
+        );
+
+
+    const link =
+        document.createElement(
+            "a"
+        );
+
+
+    link.href = url;
+
+
+    link.download =
+        "scholarship-applications.json";
+
+
+    link.click();
+
+
+    URL.revokeObjectURL(url);
+
+}
+
+
+/* =========================
+   RESET
+========================= */
+
+function resetData() {
+
+    const confirmed =
+        confirm(
+            "Reset the tracker to the demo applications?"
+        );
+
+
+    if (!confirmed) return;
+
+
+    applications =
+        JSON.parse(
+            JSON.stringify(
+                demoApplications
+            )
+        );
+
+
+    saveData();
+
+    render();
+
+}
+
+
+/* =========================
+   SECURITY
+========================= */
+
+function escapeHTML(text) {
+
+    const div =
+        document.createElement(
+            "div"
+        );
+
+
+    div.textContent = text;
+
+
+    return div.innerHTML;
+
+}
+
+
+/* =========================
+   START
+========================= */
+
+render();
+
+</script>
+
+</body>
+</html>
+```
